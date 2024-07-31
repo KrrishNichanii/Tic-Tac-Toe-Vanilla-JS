@@ -1,0 +1,84 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.container{
+    margin-top: 5rem;
+    width: 50%;
+    height:80vh ; 
+    background-color:antiquewhite ;
+    padding: 0rem 2rem ;
+    position: relative;
+}
+
+.header{
+    text-align: center;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 1rem;
+    height:75%;
+    margin-top:  2rem;
+}
+
+
+.grid-card{
+   background-color: aqua;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   font-size: xx-large;
+   border-radius: 8px;
+   cursor: pointer;
+   border: 2px transparent solid ; 
+}
+
+.grid-card:hover{
+    box-shadow: 0 0 10px rgba(255, 20, 147, 0.75);
+    transition-duration: 500ms;
+}
+
+.header span:hover{
+    text-shadow: 0 0 10px #FF1493
+}
+
+.hidden{
+    display: none;
+}
+
+.container .hidden-modal{
+    display: none;
+}
+
+.footer{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.reset-modal{
+   width: 15rem;
+   height: 15rem;
+   padding: 2rem 2rem;
+   background-color: black;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   border-radius: 10px;
+   text-align: center;
+   display: flex;
+   flex-direction: column;
+   gap: 3rem;
+}
+
+.win-para{
+   font-size: 2rem;
+   color:white ; 
+}
