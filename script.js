@@ -6,6 +6,7 @@ let turnBtn = document.querySelector('.turn') ;
 let header = document.querySelector('.header') ; 
 let celebModal = document.querySelector('.reset-modal') ; 
 let resetBtn = document.querySelector('.reset') ; 
+let confetti = document.querySelector('.celebration')
 
 let board = [
     ['' ,'' ,''],
@@ -23,9 +24,27 @@ function markCard(i,j){
     if(!board[i][j]) board[i][j] = turn == 'X' ? 'X' : 'O' ; 
     else return ; 
     createGrid(board) ;
-    isWin(board,i,j) ; 
+    if(isWin(board,i,j)) return ; 
     turn = turn == 'X' ? 'O' : 'X' ; 
     turnBtn.textContent = turn == 'X' ? '❌' : '⭕'  ; 
+    if(isDraw(board))  declareDraw() ; 
+}
+
+function declareDraw(){
+    celebModal.classList.remove('hidden-modal') ; 
+    celebModal.classList.add('reset-modal') ; 
+    let winSpan = document.querySelector('.winner') ; 
+    winSpan.textContent = 'No one';
+    confetti.textContent = " " ; 
+    resetBtn.addEventListener("click", resetGame) ; 
+}
+
+
+function isDraw(board){
+    let cnt = 0 ; 
+    for(let i=0;i<board.length;i++) for(let j=0;j<board.length;j++) if(board[i][j]) cnt++ ; 
+    if(cnt == 9) return true ; 
+    else false ; 
 }
 
 function isWin(board , i , j){
@@ -42,7 +61,7 @@ function isWin(board , i , j){
       if(isRight){
         isPlayable = false ; 
         declareWinner(turn) ; 
-        return ; 
+        return true; 
       }
       isRight = true ; 
       for(let k=0;k<3;k++){ // check jth row
@@ -55,7 +74,7 @@ function isWin(board , i , j){
      if(isRight){
         isPlayable = false ; 
         declareWinner(turn) ; 
-        return ; 
+        return true; 
       }
 
       isRight = true ; 
@@ -70,13 +89,27 @@ function isWin(board , i , j){
         if(isRight){
             isPlayable = false ; 
             declareWinner(turn) ; 
-            return ; 
+            return true; 
+          }
+
+          isRight = true ; 
+
+          for(let k = 2;k>=0;k--){
+            if(board[2-k][k] != justMarked){
+                isRight = false ; 
+                break ; 
+             } 
+            }
+
+        if(isRight){
+            isPlayable = false ; 
+            declareWinner(turn) ; 
+            return true; 
           }
       }
 }
 
 function declareWinner(winner){
-    console.log(celebModal.classList);
    celebModal.classList.remove('hidden-modal') ; 
    celebModal.classList.add('reset-modal') ; 
    let winSpan = document.querySelector('.winner') ; 
@@ -97,6 +130,8 @@ function resetGame() {
     isPlayable = true ; 
     turnBtn.textContent = '' ; 
     header.classList.remove('hidden') ;
+    confetti.textContent = '🎊' ; 
+    header.innerHTML = 'Choose <span class="choose-x">❌</span> or <span class="choose-o">⭕</span> '
 }
 
 function createGrid(board){
@@ -123,11 +158,13 @@ document.addEventListener("DOMContentLoaded" , () => {
 btnx.addEventListener("click", () =>{
     turn = 'X' ; 
     turnBtn.textContent = '❌' ; 
-    header.classList.add('hidden') ;  
+    header.innerHTML = 'Tic Tac Toe'
+
 })
 
 btno.addEventListener("click", () =>{
     turn = 'O' ; 
     turnBtn.textContent = '⭕'
-    header.classList.add('hidden') ; 
+    header.innerHTML = 'Tic Tac Toe'
+
 })
